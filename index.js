@@ -106,18 +106,15 @@ app.put("/api/persons/:id", (request, response, next) => {
 
   const body = request.body;
 
-  if (!body.number) {
-    return response.status(400).json({
-      error: "name or number is missing",
-    });
-  }
-
   const updatedPerson = {
     name: body.name,
     number: body.number,
   };
 
-  Person.findByIdAndUpdate(id, updatedPerson, { new: true, runValidators })
+  Person.findByIdAndUpdate(id, updatedPerson, {
+    new: true,
+    runValidators: true,
+  })
     .then((person) => {
       if (person) {
         response.json(person);
